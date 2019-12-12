@@ -57,5 +57,21 @@ case ${month} in
 "10") echo "November" ;;
 "11") echo "October" ;;
 "12") echo "December" ;;
-*) echo "Podaj wartości z przedziału od 1 do 12"
+*) echo "Podaj wartości z przedziału od 1 do 12: "
+esac
+
+
+echo "Instrukcja wyboru case"
+echo -n "Podaj liczbę z zakresu od 1 do 7: "
+read week
+
+case ${week} in
+"1")echo "Monday" ;;
+"2")echo "Tuesday" ;;
+"3")echo "Wednesday" ;;
+"4")echo "Thursday" ;;
+"5")echo "Friday" ;;
+"6")echo "Saturday" ;;
+"7")echo "Sunday" ;;
+*)echo "wpisz liczbę od 1 do 7" ;;
 esac

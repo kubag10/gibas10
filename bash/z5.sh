@@ -57,3 +57,9 @@ while [ ${j} -le 30 ] ; do
     echo -ne "\0227"
     j=$[j+1]
 done
+
+while [ ${i} -le 40 ] ; do
+do
+    echo -ne "\0227"
+    j=$[i+2]
+done
