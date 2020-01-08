@@ -7,11 +7,12 @@ function f1() {
 }
 
 function f2() {
-    echo "f2"
+    echo -n "Podaj numer użytkownika"
+    read usernumer
 }
 
 function f3() {
-    echo "f3"
+    echo -n "Coś"
 }
 # Menu skryptu
 
