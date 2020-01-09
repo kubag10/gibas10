@@ -1,30 +1,40 @@
 #!/bin/bash
 
-function loadUsers() {
-    echo "loadUsers"
-}
+#Zmienna globalna
+#ładowanie użytkowników
+user_list=(`cat users.txt`)
 
 function showUsers() {
-    echo "showUsers"
+    echo "showUsers ..."
+    echo "Lista"
+    for(( i=0; i<=${#user_list[@]}; i++ ))
+    do
+	echo "	${user_list[i]}"
+    done
 }
 
 function addUsers() {
-    echo "addUsers"
+    echo "addUsers ..."
+    for user in "${user_list[@]}"
+    do
+	echo "Add user: ${user}"
+	useradd ${user} -s /sbin/nologin -g users 
+    done
 }
 
 function delUsers() {
-    echo "delUsers"
+    echo "delUsers ..."
 }
 
 function acceptRemoteLogin() {
-    echo "acceptRemotUsers"
+    echo "acceptRemotUsers ..."
 }
 
 function deniRemoteLogin() {
-    echo "deniRemotUsers"
+    echo "deniRemotUsers ..."
 }
 
-function Quit() {
+function quit() {
     exit 0
 }
 
@@ -32,16 +42,15 @@ function Help() {
 cat << EndOfMessage
     Opis opcji skryptu:
     -------------------
-    LU
-    SU
+    SU-pokarz urzytkowników z pliku
+    AU-dodawanie urzytkowników z pliku
 EndOfMessage
 }
 
 #menu
-select option in LU SU AU DU ARL DRL HELP QUIT
+select option in SU AU DU ARL DRL HELP QUIT
 do
     case ${option} in
-	"LU") loadUsers ;;
 	"SU") showUsers ;;
 	"AU") addUsers ;;
 	"DU") delUsers ;;
@@ -51,3 +60,4 @@ do
 	"QUIT") quit ;;
 	    *) help  ;;
     esac
+done
