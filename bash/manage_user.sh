@@ -15,23 +15,47 @@ function showUsers() {
 
 function addUsers() {
     echo "addUsers ..."
-    for user in "${user_list[@]}"
-    do
-	echo "Add user: ${user}"
-	useradd ${user} -s /sbin/nologin -g users 
-    done
+    echo -n "Are you sure ? [y/n]"
+    read sure
+    if [ ${sure} == "y" ]; then
+        for user in "${user_list[@]}"
+	do
+	    echo "Add user: ${user}"
+	    sudo useradd ${user} -s /sbin/nologin -g "users"
+	done
+    fi
 }
 
 function delUsers() {
     echo "delUsers ..."
+    echo -n "Are you sure ? [y/n] "
+    read sure
+    if [ "${sure}" == "y" ]; then
+	for user in "${user_list[@]}"
+	do
+	    echo "Remove user ${user} [OK]"
+	    sudo userdel ${user}
+	done
+    fi
 }
 
 function acceptRemoteLogin() {
     echo "acceptRemotUsers ..."
+    
+    for user in "${user_list[@]}"
+    do
+    echo "Accept remote login for ${user} [OK] "
+    sudo usermod -s /bin/bash ${user}
+    done
 }
 
 function deniRemoteLogin() {
     echo "deniRemotUsers ..."
+    for user in "${user_list[@]}"
+    do
+    echo "Denited remote login for ${user} [OK] "
+    sudo usermod -s /subit/nologin ${user}
+    done
 }
 
 function quit() {
