@@ -3,6 +3,18 @@
 #Zmienna globalna
 #ładowanie użytkowników
 user_list=(`cat users.txt`)
+status="FAIL"
+RED='\033[0:31m'
+GREEN'/033[1:32'
+NC='\033[0m'
+
+function checkStatusCode {
+    if [ $? == 0 ];then
+	status="PASS"
+    else
+	status="FAIL"
+    fi
+}
 
 function showUsers() {
     echo "showUsers ..."
@@ -20,8 +32,9 @@ function addUsers() {
     if [ ${sure} == "y" ]; then
         for user in "${user_list[@]}"
 	do
-	    echo "Add user: ${user}"
-	    sudo useradd ${user} -s /sbin/nologin -g "users"
+	    sudo useradd ${user} -m -s /sbin/nologin -g "users" 2> /dev/null
+	checkStatusCode
+	    echo "Add user: ${user} [${status}]"
 	done
     fi
 }
@@ -33,8 +46,9 @@ function delUsers() {
     if [ "${sure}" == "y" ]; then
 	for user in "${user_list[@]}"
 	do
-	    echo "Remove user ${user} [OK]"
-	    sudo userdel ${user}
+	    sudo userdel ${user} 2> /dev/null
+	checkStatusCode
+	    echo "Remove user ${user} [${status}]"
 	done
     fi
 }
@@ -44,8 +58,9 @@ function acceptRemoteLogin() {
     
     for user in "${user_list[@]}"
     do
-    echo "Accept remote login for ${user} [OK] "
-    sudo usermod -s /bin/bash ${user}
+	sudo usermod -s /bin/bash ${user} 2> /dev/null
+	checkStatusCode
+	echo "Accept remote login for ${user} [${status}] "
     done
 }
 
@@ -53,8 +68,9 @@ function deniRemoteLogin() {
     echo "deniRemotUsers ..."
     for user in "${user_list[@]}"
     do
-    echo "Denited remote login for ${user} [OK] "
-    sudo usermod -s /subit/nologin ${user}
+	sudo usermod -s /subit/nologin ${user} 2> /dev/null
+	checkStatusCode
+	echo "Denited remote login for ${user} [${status}] "
     done
 }
 
